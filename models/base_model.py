@@ -10,7 +10,8 @@ from uuid import uuid4
 
 class BaseModel:
     """
-    Represents the base model from which other models in the project inherit from.
+    Represents the base model from which other models in
+    the project inherit from.
     """
 
     def __init__(self):
@@ -29,7 +30,8 @@ class BaseModel:
 
     def to_dict(self):
         """
-        Returns a dictionary representation of the attributes of the instance as key/value pairs.
+        Returns a dictionary representation of the attributes
+        of the instance as key/value pairs.
         """
         to_json = self.__dict__.copy()
         to_json['__class__'] = self.__class__.__name__
