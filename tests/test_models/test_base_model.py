@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 
 """
-This script contains tests for the base model.
+This script contains tests for the base model of the project.
 """
-
 import unittest
 from datetime import datetime
 from models.base_model import BaseModel
@@ -11,39 +10,66 @@ from models.base_model import BaseModel
 
 class TestBaseModel(unittest.TestCase):
     """
-    Test suites for the base model.
+    Test suites for the base model of the project.
     """
-
     def setUp(self):
         """
-        Classes needed for testing
+        Set up the test environment.
         """
         self.my_model = BaseModel()
 
-    def test_basic(self):
+    def test_init_no_args(self):
         """
-        Tests basic inputs for the base model class
+        Test that a new instance can be created without any arguments.
         """
-        self.my_model = my_model
-        my_model.name = "ALX"
-        my_model.number = 89
-        self.assertEqual([my_model.name, my_model.number], ["ALX", 89])
-        self.assertIsInstance(my_model.id, str)
+        self.assertIsInstance(self.my_model, BaseModel)
+        self.assertTrue(hasattr(self.my_model, "id"))
+        self.assertTrue(hasattr(self.my_model, "created_at"))
+        self.assertTrue(hasattr(self.my_model, "updated_at"))
 
-    def test_datetime(self):
+    def test_init_with_kwargs(self):
         """
-        Tests for correct datetime format.
+        Test that a new instance can be created with keyword arguments.
         """
-        self.assertIsInstance(self.my_model.created_at, datetime)
-        self.assertIsInstance(self.my_model.updated_at, datetime)
+        kwargs = {
+            "id": "123",
+            "name": "ALX",
+            "number": 89,
+            "created_at": "2021-02-11T09:03:54.052000",
+            "updated_at": "2021-02-11T09:03:54.052000",
+        }
+        mwkwargs = BaseModel(**kwargs)
+        self.assertEqual(mwkwargs.id, "123")
+        self.assertEqual(mwkwargs.name, "ALX")
+        self.assertEqual(mwkwargs.number, 89)
+        self.assertIsInstance(mwkwargs.created_at, datetime)
+        self.assertIsInstance(mwkwargs.updated_at, datetime)
+        self.assertEqual(
+            mwkwargs.created_at.isoformat(),
+            "2021-02-11T09:03:54.052000"
+        )
+        self.assertEqual(
+            mwkwargs.updated_at.isoformat(),
+            "2021-02-11T09:03:54.052000"
+        )
 
-    def test_to_dict(self):
+    def test_init_with_partial_kwargs(self):
         """
-        Tests for the correct return type of the to_dict method.
+        Test that a new instance can be created with partial keyword arguments.
         """
-        model_dict = self.my_model.to_dict()
-        self.assertIsInstance(model_dict, dict)
+        kwargs = {"id": "456", "name": "School"}
+        model_with_partial_kwargs = BaseModel(**kwargs)
+        self.assertEqual(model_with_partial_kwargs.id, "456")
+        self.assertEqual(model_with_partial_kwargs.name, "School")
+        self.assertFalse(hasattr(model_with_partial_kwargs, "created_at"))
+        self.assertFalse(hasattr(model_with_partial_kwargs, "updated_at"))
 
-
-if __name__ == '__main__':
-    unittest.main()
+    def test_init_ignores_class_key_in_kwargs(self):
+        """
+        Test that __class__ key in kwargs is ignored during initialization.
+        """
+        kwargs = {"__class__": "ShouldNotBeSet", "id": "789", "name": "Test"}
+        mwclass_key = BaseModel(**kwargs)
+        self.assertFalse(hasattr(mwclass_key, "__class__ShouldNotBeSet"))
+        self.assertEqual(mwclass_key.id, "789")
+        self.assertEqual(mwclass_key.name, "Test")
