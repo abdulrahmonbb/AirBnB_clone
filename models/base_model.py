@@ -31,7 +31,7 @@ class BaseModel:
         """
         Returns a dictionary representation of the attributes of the instance as key/value pairs.
         """
-        to_json = {}
+        to_json = self.__dict__.copy()
         to_json['__class__'] = self.__class__.__name__
         to_json['created_at'] = self.created_at.isoformat()
         to_json['updated_at'] = self.updated_at.isoformat()
