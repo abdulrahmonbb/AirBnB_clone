@@ -7,7 +7,6 @@ and deserializes JSON file to instances.
 
 import os
 import json
-from models.base_model import BaseModel
 
 
 class FileStorage:
@@ -17,7 +16,16 @@ class FileStorage:
 
     __file_path = "file.json"
     __objects = {}
-    CLASSES = {"BaseModel": BaseModel}
+
+    def classes(self):
+        """
+        Returns a dictionary of classes.
+        """
+        from models.base_model import BaseModel
+        classes = {
+            "BaseModel": BaseModel
+        }
+        return classes
 
     def all(self):
         """
@@ -53,5 +61,5 @@ class FileStorage:
 
             for key, value in content.items():
                 cls_name = value["__class__"]
-                obj = self.CLASSES[cls_name](**value)
+                obj = self.classes()[cls_name](**value)
                 self.__objects[key] = obj
