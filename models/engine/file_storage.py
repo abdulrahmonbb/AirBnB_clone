@@ -22,8 +22,10 @@ class FileStorage:
         Returns a dictionary of classes.
         """
         from models.base_model import BaseModel
+        from models.user import User
         classes = {
-            "BaseModel": BaseModel
+            "BaseModel": BaseModel,
+            "User": User,
         }
         return classes
 
