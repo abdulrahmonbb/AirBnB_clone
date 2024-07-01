@@ -12,6 +12,7 @@ class TestBaseModel(unittest.TestCase):
     """
     Test suites for the base model of the project.
     """
+
     def setUp(self):
         """
         Set up the test environment.
@@ -44,14 +45,10 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(mwkwargs.number, 89)
         self.assertIsInstance(mwkwargs.created_at, datetime)
         self.assertIsInstance(mwkwargs.updated_at, datetime)
-        self.assertEqual(
-            mwkwargs.created_at.isoformat(),
-            "2021-02-11T09:03:54.052000"
-        )
-        self.assertEqual(
-            mwkwargs.updated_at.isoformat(),
-            "2021-02-11T09:03:54.052000"
-        )
+        self.assertEqual(mwkwargs.created_at.isoformat(),
+                         "2021-02-11T09:03:54.052000")
+        self.assertEqual(mwkwargs.updated_at.isoformat(),
+                         "2021-02-11T09:03:54.052000")
 
     def test_init_with_partial_kwargs(self):
         """

@@ -7,6 +7,7 @@ This script contains the unit test for the User class.
 import unittest
 from models.user import User
 
+
 class TestUser(unittest.TestCase):
 
     def setUp(self):
@@ -45,6 +46,7 @@ class TestUser(unittest.TestCase):
         self.assertEqual(self.user.password, "password123")
         self.assertEqual(self.user.first_name, "John")
         self.assertEqual(self.user.last_name, "Doe")
+
 
 if __name__ == "__main__":
     unittest.main()
